@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GrapesJS Plugin Custom Code</title>
+    <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://unpkg.com/grapesjs-templates"></script>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+
+<div id="gjs" style="height:0px; overflow:hidden;"></div>
+
+
+<script type="text/javascript">
+  window.onload = () => {
+    // 1. Inicializa o editor
+    const editor = grapesjs.init({
+      container: '#gjs',
+      height: '100%',
+      showOffsets: true,
+      allowScripts: true,
+      noticeOnUnload: true,
+      storageManager: true,
+      fromElement: true,
+      plugins: ['grapesjs-templates'],
+      pluginsOpts: {            
+        'grapesjs-templates': {}
+      }
+    });
+
+    // 2. Define o comando (o que acontece quando clica)
+    editor.Commands.add('open-credits-modal', {
+      run(editor) {
+        editor.Modal.open({
+          title: 'Créditos e Licença MIT',
+          content: `
+            <div style="padding: 20px; font-family: sans-serif; color: #333;">
+              <h3>Licenças de Terceiros</h3>
+              <p><strong>GrapesJS Templates Plugin</strong></p>
+              <p>Copyright (c) 2024 [Nome do Autor do Plugin]</p>
+              <hr>
+              <pre style="white-space: pre-wrap; font-size: 11px; background: #eee; padding: 10px;">
+O TEXTO COMPLETO DA LICENÇA MIT VAI AQUI...
+              </pre>
+            </div>
+          `,
+        });
+      }
+    });
+
+    // 3. Adiciona o botão ao painel superior
+    editor.Panels.addButton('options', {
+      id: 'open-credits',
+      className: 'fa fa-copyright', // Certifique-se de que o FontAwesome está carregado
+      command: 'open-credits-modal',
+      attributes: { title: 'Ver Créditos e Licenças' }
+    });
+  };
+
+    </script>
+  </body>
+</html>
